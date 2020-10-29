@@ -7,6 +7,7 @@ from scipy.misc import derivative
 from matplotlib import pyplot as plt
 from matplotlib import animation
 from matplotlib.lines import Line2D
+from mpl_toolkits import mplot3d
 from mpl_toolkits.mplot3d.art3d import Line3D
 from mpl_toolkits.mplot3d.axes3d import Axes3D
 import itertools
@@ -167,7 +168,7 @@ class Plotter:
         plt.show()
 
     def plotWaveFunction3d(self, waveFunction: WaveFunction, samples=50, frames=250, timeFactor=1, saveName=None):
-
+        # Setup Plot
         fig = plt.figure()
         ax1 = fig.add_axes([0, 0, 1, 1], projection='3d')
         ax1.set_xlabel('$x$')
@@ -184,10 +185,10 @@ class Plotter:
 
         plotlays, plotcols = [2], ["blue", "red", "green"]
 
-        lines = []
+        lines: List[Line3D] = []
         pts = []
 
-        for index in [0, 2]:
+        for index in [0, 1]:
             lobj = ax1.plot([], [], [], lw=2, color=plotcols[index])[0]
             pobj = ax1.plot([], [], [], lw=2, color=plotcols[index])[0]
             lines.append(lobj)
@@ -195,42 +196,23 @@ class Plotter:
 
         def init():
             for line, pt in zip(lines, pts):
-                line.set_data([], [])
-                line.set_3d_properties([])
+                line.set_data_3d(np.array([]), np.array([]), np.array([]))
 
             return lines + pts
 
-        def frame_path(i):
-            i += 500
-            if i < 680:
-                return 0, 0
-            # elif 500 <= i < 680:
-            # new_i = i - 500
-            # return 0, -90 + new_i/2
-            elif 680 <= i < 860:
-                new_i = i - 680
-                return new_i / 6, new_i / 3
-            else:
-                return 30, 60
-
-        def frame_path(i):
-            if i < 500:
-                return 0, -90
-            elif 500 <= i < 590:
-                new_i = i - 500
-                return new_i / 3, -90 + new_i / 3
-            else:
-                return 30, -60
-
         def animate(i):
-            elev, azim = frame_path(i)
-            ax1.view_init(elev, azim)
+            # elev, azim = frame_path(i)
+            # ax1.view_init(elev, azim)
 
+            # Positions along x axis
             posValues = np.linspace(-5, 5, samples)
+            # Complex Amplitude of wave function on x axis after time t
             amplitudeValues = [waveFunction.evaluate(x, timeFactor * i / 50) for x in posValues]
-
+            # Real part of wave function
             reValues = np.real(amplitudeValues)
+            # Imaginary part of wave function
             imValues = np.imag(amplitudeValues)
+            # Probability amplitude
             probValues = np.absolute(amplitudeValues) ** 2
 
             ylist = [(imValues, reValues), (0, probValues)]
@@ -244,8 +226,8 @@ class Plotter:
 
         anim = animation.FuncAnimation(fig, animate, init_func=init, frames=frames, interval=10, blit=True)
 
-        if saveName != None:
-            anim.save('./video/animations/' + saveName + '.mp4', fps=30, writer='avconv', codec='libx264')
+        if saveName is not None:
+            anim.save(saveName + '.gif', fps=30, writer='avconv', codec='libx264')
 
         plt.show()
 
@@ -253,7 +235,5 @@ class Plotter:
 p = Plotter()
 hs = HilbertSpace(dim=2, hamiltonianPotential=lambda x: 1 / 2 * x ** 2, basis='QHO')
 psi = WaveFunction(hs, coeff=[1, 1])
-# psi = WaveFunction(hs, lambda x: 1 if abs(x) < 5 else 0)
-print('c_n = ' + str(psi.coeff))
 
-p.plotWaveFunction3d(psi, samples=300, frames=1000, timeFactor=2, saveName=None)
+p.plotWaveFunction3d(psi, samples=300, frames=600, timeFactor=2, saveName=None)
