@@ -2,4 +2,4 @@
 
 Double Pendulum
 
-![](simulations/double_pendulum.gif)
+![](simulations/double_pendulum/double_pendulum.gif)
