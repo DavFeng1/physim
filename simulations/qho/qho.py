@@ -236,4 +236,4 @@ p = Plotter()
 hs = HilbertSpace(dim=2, hamiltonianPotential=lambda x: 1 / 2 * x ** 2, basis='QHO')
 psi = WaveFunction(hs, coeff=[1, 1])
 
-p.plotWaveFunction3d(psi, samples=300, frames=600, timeFactor=2, saveName="qho")
+p.plotWaveFunction3d(psi, samples=300, frames=200, timeFactor=2, saveName="qho")
