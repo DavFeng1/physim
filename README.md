@@ -1,4 +1,4 @@
-# Simulations of common physics systems
+# Simulations of common physical systems
 
 Classical Double Pendulum
 
