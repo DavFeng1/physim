@@ -48,7 +48,7 @@ def total_energy(y):
 # Maximum time, time point spacings and the time grid (all in s).
 tmax, dt = 30, 0.01
 
-t = np.arange(0, tmax+dt, dt)
+t = np.arange(0, tmax + dt, dt)
 
 # Initial conditions: theta1, dtheta1/dt, theta2, dtheta2/dt.
 y0 = np.array([3*np.pi/7, 0, 3*np.pi/4, 0])
@@ -121,6 +121,7 @@ def make_plot(i):
     # Centre the image on the fixed anchor point, and ensure the axes are equal
     ax.set_xlim(-L1-L2-r, L1+L2+r)
     ax.set_ylim(-L1-L2-r, L1+L2+r)
+    plt.axis('off')
 
     return ax.plot()
 
