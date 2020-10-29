@@ -227,7 +227,7 @@ class Plotter:
         anim = animation.FuncAnimation(fig, animate, init_func=init, frames=frames, interval=10, blit=True)
 
         if saveName is not None:
-            anim.save(saveName + '.gif', fps=30, writer='avconv', codec='libx264')
+            anim.save(saveName + '.gif', fps=30)
 
         plt.show()
 
