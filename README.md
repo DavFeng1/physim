@@ -1,7 +1,7 @@
 # Simulations of Common Physical Systems
 
 ## Classical Double Pendulum
-Analytic solution from Euler-Lagrange equations using canonical coordinates .
+Analytic solution from Euler-Lagrange equations using canonical coordinates.
 
 ![](simulations/double_pendulum/double_pendulum.gif)
 
