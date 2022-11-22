@@ -3,9 +3,11 @@ import dearpygui.dearpygui as dpg
 def save_callback():
     print("Save Clicked")
 
+
 dpg.create_context()
 dpg.create_viewport()
 dpg.setup_dearpygui()
+dpg.set_global_font_scale(1.5)
 
 with dpg.window(label="Example Window"):
     dpg.add_text("Hello world")
